@@ -1,0 +1,36 @@
+const { default: mongoose } = require('mongoose')
+const require = require('mongoose')
+
+const userSchema = mongoose.Schema({
+       email: {
+              type: String,
+              required: [true, "email is required for creating a user"],
+              trim: true,
+              lowercase: true,
+              match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "invalid email address"],
+              unique: [true, "email already exists"]
+       },
+
+       name: {
+              type: String,
+              required:[true, 'name is required for creating an account']
+       },
+
+       password: {
+              type: String,
+              required: [true, 'password is required for creating an account'],
+              minlength: [6, "password should contain more than 6 characters"],
+              select: false
+       }
+
+
+       
+},{
+       timestamps: true
+})
+
+userSchema.pre["save", async function (next) {
+
+       
+       
+}]
