@@ -1,7 +1,8 @@
 const { default: mongoose } = require('mongoose')
 const require = require('mongoose')
+const bcryt = require('bcryptjs')
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
        email: {
               type: String,
               required: [true, "email is required for creating a user"],
@@ -31,6 +32,22 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre["save", async function (next) {
 
-       
-       
+       if(!this.isModefied("password")) {
+              return next()
+       }
+
+       const hash = await bcrypt.hash(this.password, 10)
+       this.password = hash
+
+       return next()
+
 }]
+
+userSchema.methods.comparePassword = async function (password) {
+       
+       return await bcryt.compare(password, this.password)
+}
+
+const userModel = mongoose.model('user', userSchema)
+
+module.exports = userModel
