@@ -1,5 +1,4 @@
-const { default: mongoose } = require('mongoose')
-const require = require('mongoose')
+const mongoose  = require('mongoose')
 const bcryt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
@@ -33,13 +32,13 @@ const userSchema = new mongoose.Schema({
 userSchema.pre["save", async function (next) {
 
        if(!this.isModefied("password")) {
-              return next()
+              return
        }
 
        const hash = await bcrypt.hash(this.password, 10)
        this.password = hash
 
-       return next()
+       return 
 
 }]
 
