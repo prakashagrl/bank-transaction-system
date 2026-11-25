@@ -1,15 +1,15 @@
 $kind: http-request
-url: localhost:3000/api/auth/register
+url: http://localhost:3000/api/auth/register
 method: POST
 body:
   type: json
   content: "{\r
 
-    \    \"name\": \"Amisha\",\r
+    \    \"email\": \"prakashagrl.2004@gmail.com\",\r
 
-    \    \"email\": \"amisha@gmail.com\",\r
+    \    \"password\": \"test123\",\r
 
-    \    \"password\": \"test123\"\r
+    \    \"name\": \"prakashagrl\"\r
 
     }"
 order: 1000
