@@ -1,4 +1,5 @@
 const express = require('express')
+const authMiddleware = require('../middleware/auth.middleware')
 
 const router = express.Router()
 
@@ -7,6 +8,6 @@ const router = express.Router()
  * - Create a new transaction
  */
 
-router.post('/')
+router.post('/', authMiddleware.authMiddleware)
 
 module.exports = router
