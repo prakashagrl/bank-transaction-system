@@ -40,11 +40,58 @@ const sendEmail = async (to, subject, text, html) => {
 };
 
 async function sendRegistrationEmail(userEmail, name) {
-  const subject = 'Welcome to bank-transaction-system!';
-  const text = `Hello ${name},\n\nThank you for registering at bank-transaction-system. We're excited to have you on board!\n\nBest regards,\nThe bank-transaction-system Team`;
-  const html = `<p>Hello ${name},</p><p>Thank you for registering at bank-transaction-system. We're excited to have you on board!</p><p>Best regards,<br>The bank-transaction-system Team</p>`;
 
-  await sendEmail(userEmail, subject, text, html);
+    const subject = 'Welcome to bank-transaction-system – Registration Successful!';
+
+    const text = `Hello ${name},
+
+Welcome to bank-transaction-system!
+
+Your registration has been completed successfully. We are delighted to have you as a customer.
+
+You can now access your banking dashboard and explore our banking services.
+
+Please remember to keep your login credentials confidential and never share your password or OTP with anyone.
+
+Thank you for choosing bank-transaction-system.
+
+Best regards,
+bank-transaction-system Team`;
+
+    const html = `
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h2 style="color: #2563eb;">Welcome to bank-transaction-system!</h2>
+
+            <p>Hello <strong>${name}</strong>,</p>
+
+            <p>
+                Your registration has been completed successfully.
+                We are delighted to have you as a customer.
+            </p>
+
+            <p>
+                You can now access your banking dashboard
+                and explore our banking services.
+            </p>
+
+            <div style="background: #f3f4f6; padding: 15px; border-radius: 8px;">
+                <strong>Security Reminder:</strong>
+                <p>
+                    Never share your password, OTP, or confidential
+                    banking information with anyone.
+                </p>
+            </div>
+
+            <p>Thank you for choosing bank-transaction-system!</p>
+
+            <p>
+                Best regards,<br>
+                <strong>bank-transaction-system Team</strong>
+            </p>
+        </div>
+    `;
+
+    await sendEmail(userEmail, subject, text, html);
 }
 
 module.exports = sendEmail;
