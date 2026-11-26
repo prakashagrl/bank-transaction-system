@@ -1,5 +1,5 @@
 const transactionModel = require('../models/transaction.model')
-
+const mongoose = require('mongoose')
 const ledgerModel = require('../models/ledger.model')
 const accountModel = require('../models/account.model')
 const emailService = require('../services/email.service')
@@ -82,6 +82,70 @@ async function createTransaction(req, res) {
               }
        }
 
+       /**
+       * 3. Check account status
+       */
 
-}
+       if (fromUserAccount.status !== "ACTIVE" || toUserAccount.status !== "ACTIVE") {
+              return res.status(400).json({
+                     message: "Both fromAccount and toAccount must be ACTIVE to process transaction"
+              })
+       }
 
+       /**
+        * 4. Derive sender balance from ledger
+        */
+
+       const balance = await fromUserAccount.getBalance()
+
+       if (balance < amount) {
+              return res.status(400).json({
+                     message: `insufficient balance. current balance is ${balance}. Requested amount is ${amount}`
+              })
+       }
+
+       let transaction;
+       try {
+
+
+              /**
+               * 5-9. Create transaction (PENDING) to commit mongoDB session
+               */
+              const session = await mongoose.startSession()
+              session.startTransaction()
+
+              transaction = (await transactionModel.create([{
+                     fromAccount,
+                     toAccount,
+                     amount,
+                     idempotencyKey,
+                     status: "PENDING"
+              }], { session }))[0]
+
+              const debitLedgerEntry = await ledgerModel.create([{
+                     account: fromAccount,
+                     amount: amount,
+                     transaction: transaction._id,
+                     type: "DEBIT"
+              }], { session })
+
+              await (() => {
+                     return new Promise((resolve) => setTimeout(resolve, 15 * 1000));
+              })()
+
+              const creditLedgerEntry = await ledgerModel.create([{
+                     account: toAccount,
+                     amount: amount,
+                     transaction: transaction._id,
+                     type: "CREDIT"
+              }], { session })
+
+              await transactionModel.findOneAndUpdate(
+                     { _id: transaction._id },
+                     { status: "COMPLETED" },
+                     { session }
+              )
+
+
+              await session.commitTransaction()
+              session.endSession()
