@@ -94,5 +94,116 @@ bank-transaction-system Team`;
     await sendEmail(userEmail, subject, text, html);
 }
 
+
+async function sendTransactionEmail(userEmail, name, amount, toAccount) {
+    const subject = 'Transaction Successful - bank-transaction-system';
+
+    const text = `Hello ${name},
+
+Your transaction has been successfully completed!
+
+Transaction Details:
+Amount: ₹${amount}
+Recipient Account: ${toAccount}
+Status: Successful
+
+Thank you for using bank-transaction-system.
+
+For your security, never share your password, OTP, or banking credentials with anyone.
+
+Best regards,
+bank-transaction-system Team`;
+
+    const html = `
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h2 style="color: #16a34a;">Transaction Successful!</h2>
+
+            <p>Hello <strong>${name}</strong>,</p>
+
+            <p>Your transaction has been successfully completed.</p>
+
+            <div style="background: #f3f4f6; padding: 15px; border-radius: 8px;">
+                <h3>Transaction Details</h3>
+                <p><strong>Amount:</strong> ₹${amount}</p>
+                <p><strong>Recipient Account:</strong> ${toAccount}</p>
+                <p><strong>Status:</strong> <span style="color: #16a34a;">Successful</span></p>
+            </div>
+
+            <p>Thank you for using bank-transaction-system.</p>
+
+            <p>
+                <strong>Security Reminder:</strong>
+                Never share your password, OTP, or banking credentials with anyone.
+            </p>
+
+            <p>
+                Best regards,<br>
+                <strong>bank-transaction-system Team</strong>
+            </p>
+        </div>
+    `;
+
+    await sendEmail(userEmail, subject, text, html);
+}
+
+
+
+async function sendTransactionFailureEmail(userEmail, name, amount, toAccount) {
+    const subject = 'Transaction Failed - bank-transaction-system';
+
+    const text = `Hello ${name},
+
+Unfortunately, your transaction could not be completed.
+
+Transaction Details:
+Amount: ₹${amount}
+Recipient Account: ${toAccount}
+Status: Failed
+
+Please check your account details and available balance before trying again. If the amount has been debited from your account, please contact our support team.
+
+Thank you for using bank-transaction-system.
+
+Best regards,
+bank-transaction-system Team`;
+
+    const html = `
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h2 style="color: #dc2626;">Transaction Failed</h2>
+
+            <p>Hello <strong>${name}</strong>,</p>
+
+            <p>Unfortunately, your transaction could not be completed.</p>
+
+            <div style="background: #f3f4f6; padding: 15px; border-radius: 8px;">
+                <h3>Transaction Details</h3>
+                <p><strong>Amount:</strong> ₹${amount}</p>
+                <p><strong>Recipient Account:</strong> ${toAccount}</p>
+                <p><strong>Status:</strong> <span style="color: #dc2626;">Failed</span></p>
+            </div>
+
+            <p>
+                Please check your account details and available balance
+                before trying again.
+            </p>
+
+            <p>
+                If the amount has been debited from your account,
+                please contact our support team.
+            </p>
+
+            <p>Thank you for using bank-transaction-system.</p>
+
+            <p>
+                Best regards,<br>
+                <strong>bank-transaction-system Team</strong>
+            </p>
+        </div>
+    `;
+
+    await sendEmail(userEmail, subject, text, html);
+}
+
+
 module.exports = sendEmail;
-module.exports = { sendRegistrationEmail }
+module.exports = { sendRegistrationEmail, sendTransactionFailureEmail, sendTransactionEmail }
