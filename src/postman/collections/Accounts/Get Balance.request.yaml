@@ -1,0 +1,5 @@
+$kind: http-request
+description: ""
+url: http://localhost:3000/api/accounts/balance/6b09d1bb1c1d286fc182de3d
+method: GET
+order: 3000

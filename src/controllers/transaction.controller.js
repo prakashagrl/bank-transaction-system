@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const ledgerModel = require('../models/ledger.model')
 const accountModel = require('../models/account.model')
 const emailService = require('../services/email.service')
+const { resolve } = require('nodemailer/lib/shared/url.js')
 
 /**
  * - Create a new transaction
@@ -140,10 +141,10 @@ async function createTransaction(req, res) {
                      type: "CREDIT"
               }], { session })
 
-              await transactionModel.findOneAndUpdate(
+              transaction = await transactionModel.findOneAndUpdate(
                      { _id: transaction._id },
                      { status: "COMPLETED" },
-                     { session }
+                     { session, new: true }
               )
 
 
@@ -218,6 +219,7 @@ async function createInitialFundsTransaction(req, res) {
               type: "DEBIT"
        }], { session })
 
+
        const creditLedgerEntry = await ledgerModel.create([{
               account: toAccount,
               amount: amount,
@@ -235,7 +237,6 @@ async function createInitialFundsTransaction(req, res) {
               message: "Initial funds transaction completed successfully",
               transaction: transaction
        })
-
 
 }
 

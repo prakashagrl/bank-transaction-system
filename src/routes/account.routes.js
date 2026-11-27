@@ -20,4 +20,11 @@ router.post('/', authMiddleware.authMiddleware, accountController.createAccountC
 
 router.get('/', authMiddleware.authMiddleware, accountController.getUserAccountsController)
 
+
+/**
+ * - GET /api/accounts/balance/:accoundId
+ */
+
+router.get('/balance/:accountId', authMiddleware.authMiddleware, accountController.getAccountBalaceController )
+
 module.exports = router

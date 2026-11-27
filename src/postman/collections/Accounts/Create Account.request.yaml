@@ -3,5 +3,13 @@ url: http://localhost:3000/api/accounts/
 method: POST
 body:
   type: json
-  content: ""
+  content: "{\r
+
+    \    \"user\": \"6b087158f6a40a840f8ab3f4\",\r
+
+    \    \"status\": \"ACTIVE\",\r
+
+    \    \"currency\": \"INR\"\r
+
+    }"
 order: 1000
