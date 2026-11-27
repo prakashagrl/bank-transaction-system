@@ -1,0 +1,18 @@
+$kind: http-request
+description: ""
+url: http://localhost:3000/api/transactions/system/initial-funds
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"fromAccount\": \"6b09435a7216f8ce680a0dd3\",\r
+
+    \    \"toAccount\": \"6b0703b512290c4778cc1b18\",\r
+
+    \    \"amount\": 10000,\r
+
+    \    \"idempotencyKey\": \"01a21c49-5e32-76ee-a7f5-3672818bd0d6\"\r
+
+    }"
+order: 1000

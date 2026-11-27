@@ -1,14 +1,17 @@
 $kind: http-request
-name: Login
-url: 'localhost:3000/api/auth/login'
+url: localhost:3000/api/auth/login
 method: POST
 order: 2000
 headers:
-  Content-Type: application/json
+  - key: Content-Type
+    value: application/json
+    disabled: true
 body:
   type: json
-  content: |-
-    {
-        "email": "prakash@gmail.com",
-        "password": "test123"
-    }
+  content: "{\r
+
+    \    \"email\":\"amisha@gmasl.com\",\r
+
+    \    \"password\":\"test123\"\r
+
+    }"
